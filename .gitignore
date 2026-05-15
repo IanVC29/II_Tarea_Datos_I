@@ -1,0 +1,16 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Carpeta de salida de compilación
+out/
+
+# Archivos compilados de Java
+*.class
+
+# Carpeta de herramientas IA del IDE
+.ai/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.dbz
