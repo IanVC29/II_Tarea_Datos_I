@@ -1,26 +1,63 @@
 package structures;
 
-// Interfaz común para todas las estructuras que se van a medir.
+/**
+ * Interfaz común para todas las estructuras que se van a medir en el benchmark.
+ *
+ * Esta interfaz permite usar arreglo, lista, BST, AVL, Splay y Red-Black
+ * con los mismos métodos principales.
+ */
 public interface BenchmarkStructure {
 
-    // Inserta un valor en la estructura.
-    void insert(int value);
+    /**
+     * Inserta una clave en la estructura.
+     *
+     * @param key clave que se desea insertar.
+     */
+    void insert(int key);
 
-    // Busca un valor en la estructura.
-    boolean search(int value);
+    /**
+     * Busca una clave en la estructura.
+     *
+     * @param key clave que se desea buscar.
+     * @return true si la clave existe, false si no existe.
+     */
+    boolean search(int key);
 
-    // Elimina un valor de la estructura.
-    boolean delete(int value);
+    /**
+     * Elimina una clave de la estructura.
+     *
+     * @param key clave que se desea eliminar.
+     */
+    void delete(int key);
 
-    // Retorna la cantidad de elementos guardados.
-    int size();
+    /**
+     * Limpia completamente la estructura.
+     */
+    void clear();
 
-    // Retorna las comparaciones acumuladas.
+    /**
+     * Devuelve las comparaciones acumuladas.
+     *
+     * @return cantidad de comparaciones.
+     */
     long getComparisons();
 
-    // Reinicia el contador de comparaciones.
+    /**
+     * Reinicia el contador de comparaciones.
+     */
     void resetComparisons();
 
-    // Retorna el nombre de la estructura.
+    /**
+     * Devuelve la altura si es árbol o el tamaño si es estructura lineal.
+     *
+     * @return altura o tamaño.
+     */
+    int getHeightOrSize();
+
+    /**
+     * Devuelve el nombre de la estructura.
+     *
+     * @return nombre de la estructura.
+     */
     String getName();
 }
