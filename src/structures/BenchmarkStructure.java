@@ -1,10 +1,10 @@
 package structures;
 
 /**
- * Interfaz común para las estructuras que se van a usar en el benchmark.
+ * Interfaz común para todas las estructuras que se van a medir en el benchmark.
  *
- * La idea es que el benchmark pueda trabajar con BST, AVL, Splay,
- * Red-Black, arreglo y lista usando los mismos métodos principales.
+ * Esta interfaz permite usar arreglo, lista, BST, AVL, Splay y Red-Black
+ * con los mismos métodos principales.
  */
 public interface BenchmarkStructure {
 
@@ -16,7 +16,7 @@ public interface BenchmarkStructure {
     void insert(int key);
 
     /**
-     * Busca una clave dentro de la estructura.
+     * Busca una clave en la estructura.
      *
      * @param key clave que se desea buscar.
      * @return true si la clave existe, false si no existe.
@@ -31,31 +31,26 @@ public interface BenchmarkStructure {
     void delete(int key);
 
     /**
-     * Limpia la estructura y la deja vacía.
-     *
-     * Esto sirve para reiniciar la estructura entre corridas del benchmark.
+     * Limpia completamente la estructura.
      */
     void clear();
 
     /**
-     * Devuelve la cantidad de comparaciones de clave realizadas.
+     * Devuelve las comparaciones acumuladas.
      *
-     * @return cantidad total de comparaciones.
+     * @return cantidad de comparaciones.
      */
     long getComparisons();
 
     /**
      * Reinicia el contador de comparaciones.
-     *
-     * Esto permite medir por separado inserción, búsqueda y borrado.
      */
     void resetComparisons();
 
     /**
-     * Devuelve la altura si la estructura es un árbol.
-     * En estructuras lineales puede usarse para devolver el tamaño.
+     * Devuelve la altura si es árbol o el tamaño si es estructura lineal.
      *
-     * @return altura o tamaño de la estructura.
+     * @return altura o tamaño.
      */
     int getHeightOrSize();
 
