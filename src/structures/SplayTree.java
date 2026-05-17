@@ -1,11 +1,10 @@
 package structures;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
- * Implementación propia de un Árbol Splay para el benchmark.
- * Adaptado al 100% con la interfaz modificada de la carpeta grupal.
+ * Implementación de un Árbol Splay.
  */
 public class SplayTree implements BenchmarkStructure {
 
@@ -81,9 +80,9 @@ public class SplayTree implements BenchmarkStructure {
     }
 
     @Override
-    public boolean delete(int key) {
+    public void delete(int key) {
         Node node = findNode(key);
-        if (node == null) return false;
+        if (node == null) return;
 
         splay(node); // Lleva el nodo a eliminar a la raíz
 
@@ -103,7 +102,6 @@ public class SplayTree implements BenchmarkStructure {
             if (successor.left != null) successor.left.parent = successor;
         }
         size--;
-        return true;
     }
 
     @Override
@@ -203,4 +201,16 @@ public class SplayTree implements BenchmarkStructure {
         while (x.left != null) x = x.left;
         return x;
     }
+
+    @Override
+    public void clear() {
+        this.root = null;
+        this.size = 0;
+        this.comparisons = 0; // O la variable que uses para contar comparaciones
+    }
+
+    public Node getRoot() {
+        return this.root;
+    }
+
 }
