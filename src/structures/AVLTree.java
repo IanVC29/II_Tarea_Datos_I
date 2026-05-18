@@ -513,61 +513,52 @@ public class AVLTree implements BenchmarkStructure {
     }
 
     /**
-     * Devuelve una representación textual del árbol.
+     * Devuelve una representacion textual del arbol Splay.
      *
-     * @return árbol en formato texto.
+     * @return arbol en formato texto.
      */
     public String toStructuredString() {
         StringBuilder builder = new StringBuilder();
-        buildString(root, builder, "", true);
+
+        if (root == null) {
+            return "(arbol vacio)";
+        }
+
+        builder.append("ROOT: ")
+                .append(root.key)
+                .append("\n");
+
+        buildString(root.left, builder, "", false, "L");
+        buildString(root.right, builder, "", true, "R");
+
         return builder.toString();
     }
 
     /**
-     * Construye una representación visual del árbol usando texto.
-     *
-     * @param node nodo actual.
-     * @param builder texto acumulado.
-     * @param prefix espacios para ordenar el dibujo.
-     * @param isTail indica si es el último nodo del nivel actual.
+     * Construye una representacion visual del arbol Splay.
      */
-    private void buildString(Node node, StringBuilder builder, String prefix, boolean isTail) {
-
-        // Si el nodo no existe, no se imprime.
+    private void buildString(Node node, StringBuilder builder, String prefix, boolean isTail, String side) {
         if (node == null) {
             return;
         }
 
-        // Se agrega el nodo actual al texto.
         builder.append(prefix)
                 .append(isTail ? "└── " : "├── ")
+                .append(side)
+                .append(": ")
                 .append(node.key)
-                .append(" (h=")
-                .append(node.height)
-                .append(")")
                 .append("\n");
 
-        // Lista auxiliar para guardar los hijos existentes.
-        List<Node> children = new ArrayList<>();
+        boolean hasLeft = node.left != null;
+        boolean hasRight = node.right != null;
 
-        // Se agrega el hijo izquierdo si existe.
-        if (node.left != null) {
-            children.add(node.left);
-        }
-
-        // Se agrega el hijo derecho si existe.
-        if (node.right != null) {
-            children.add(node.right);
-        }
-
-        // Se imprimen los hijos del nodo actual.
-        for (int i = 0; i < children.size(); i++) {
-            buildString(
-                    children.get(i),
-                    builder,
-                    prefix + (isTail ? "    " : "│   "),
-                    i == children.size() - 1
-            );
+        if (hasLeft && hasRight) {
+            buildString(node.left, builder, prefix + (isTail ? "    " : "│   "), false, "L");
+            buildString(node.right, builder, prefix + (isTail ? "    " : "│   "), true, "R");
+        } else if (hasLeft) {
+            buildString(node.left, builder, prefix + (isTail ? "    " : "│   "), true, "L");
+        } else if (hasRight) {
+            buildString(node.right, builder, prefix + (isTail ? "    " : "│   "), true, "R");
         }
     }
 }

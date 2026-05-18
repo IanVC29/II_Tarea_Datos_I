@@ -106,7 +106,28 @@ public class SplayTree implements BenchmarkStructure {
 
     @Override
     public int getHeightOrSize() {
-        return size; // Satisface la interfaz compartida retornando la cantidad de elementos
+        return getHeight(root);
+    }
+
+    /**
+     * Calcula la altura del árbol Splay.
+     *
+     * La altura se calcula contando nodos:
+     * - Árbol vacío: 0
+     * - Árbol con solo raíz: 1
+     *
+     * @param node nodo actual.
+     * @return altura desde ese nodo.
+     */
+    private int getHeight(Node node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int leftHeight = getHeight(node.left);
+        int rightHeight = getHeight(node.right);
+
+        return 1 + Math.max(leftHeight, rightHeight);
     }
 
     @Override
@@ -213,4 +234,53 @@ public class SplayTree implements BenchmarkStructure {
         return this.root;
     }
 
+    /**
+     * Devuelve una representacion textual del arbol Splay.
+     *
+     * @return arbol en formato texto.
+     */
+    public String toStructuredString() {
+        StringBuilder builder = new StringBuilder();
+
+        if (root == null) {
+            return "(arbol vacio)";
+        }
+
+        builder.append("ROOT: ")
+                .append(root.key)
+                .append("\n");
+
+        buildString(root.left, builder, "", false, "L");
+        buildString(root.right, builder, "", true, "R");
+
+        return builder.toString();
+    }
+
+    /**
+     * Construye una representacion visual del arbol Splay.
+     */
+    private void buildString(Node node, StringBuilder builder, String prefix, boolean isTail, String side) {
+        if (node == null) {
+            return;
+        }
+
+        builder.append(prefix)
+                .append(isTail ? "└── " : "├── ")
+                .append(side)
+                .append(": ")
+                .append(node.key)
+                .append("\n");
+
+        boolean hasLeft = node.left != null;
+        boolean hasRight = node.right != null;
+
+        if (hasLeft && hasRight) {
+            buildString(node.left, builder, prefix + (isTail ? "    " : "│   "), false, "L");
+            buildString(node.right, builder, prefix + (isTail ? "    " : "│   "), true, "R");
+        } else if (hasLeft) {
+            buildString(node.left, builder, prefix + (isTail ? "    " : "│   "), true, "L");
+        } else if (hasRight) {
+            buildString(node.right, builder, prefix + (isTail ? "    " : "│   "), true, "R");
+        }
+    }
 }

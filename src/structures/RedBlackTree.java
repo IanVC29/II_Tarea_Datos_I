@@ -185,4 +185,55 @@ public class RedBlackTree implements BenchmarkStructure {
         return this.root;
     }
 
+    /**
+     * Devuelve una representacion textual del arbol Red-Black.
+     *
+     * @return arbol en formato texto.
+     */
+    public String toStructuredString() {
+        StringBuilder builder = new StringBuilder();
+
+        if (root == null || root == NIL) {
+            return "(arbol vacio)";
+        }
+
+        builder.append("ROOT: ")
+                .append(root.key)
+                .append(root.color == Color.RED ? " (R)" : " (B)")
+                .append("\n");
+
+        buildString(root.left, builder, "", false, "L");
+        buildString(root.right, builder, "", true, "R");
+
+        return builder.toString();
+    }
+
+    /**
+     * Construye una representacion visual del arbol Red-Black.
+     */
+    private void buildString(Node node, StringBuilder builder, String prefix, boolean isTail, String side) {
+        if (node == null || node == NIL) {
+            return;
+        }
+
+        builder.append(prefix)
+                .append(isTail ? "└── " : "├── ")
+                .append(side)
+                .append(": ")
+                .append(node.key)
+                .append(node.color == Color.RED ? " (R)" : " (B)")
+                .append("\n");
+
+        boolean hasLeft = node.left != NIL;
+        boolean hasRight = node.right != NIL;
+
+        if (hasLeft && hasRight) {
+            buildString(node.left, builder, prefix + (isTail ? "    " : "│   "), false, "L");
+            buildString(node.right, builder, prefix + (isTail ? "    " : "│   "), true, "R");
+        } else if (hasLeft) {
+            buildString(node.left, builder, prefix + (isTail ? "    " : "│   "), true, "L");
+        } else if (hasRight) {
+            buildString(node.right, builder, prefix + (isTail ? "    " : "│   "), true, "R");
+        }
+    }
 }
